@@ -9,9 +9,9 @@ using System.Text;
 
 namespace win_monitor
 {
-    public partial class Service1 : ServiceBase
+    public partial class WinMonitor : ServiceBase
     {
-        public Service1()
+        public WinMonitor()
         {
             InitializeComponent();
         }
