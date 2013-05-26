@@ -1,6 +1,6 @@
 ﻿namespace win_monitor
 {
-    partial class Service1
+    partial class WinMonitor
     {
         /// <summary> 
         /// Required designer variable.

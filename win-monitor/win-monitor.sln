@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 10.00
 # Visual Studio 2008
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "win-monitor", "win-monitor\win-monitor.csproj", "{F7686C99-D694-4C21-A366-57ADC92BDDD8}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "winmonitorconfig", "WindowsFormsApplication1\winmonitorconfig.csproj", "{6B640CF0-E8D2-4D61-808B-9811BAE0A832}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "winmonitorlib", "ClassLibrary1\winmonitorlib.csproj", "{717F3681-FB28-4540-8C44-76A736F135A1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,14 +11,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{F7686C99-D694-4C21-A366-57ADC92BDDD8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F7686C99-D694-4C21-A366-57ADC92BDDD8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F7686C99-D694-4C21-A366-57ADC92BDDD8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F7686C99-D694-4C21-A366-57ADC92BDDD8}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6B640CF0-E8D2-4D61-808B-9811BAE0A832}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6B640CF0-E8D2-4D61-808B-9811BAE0A832}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6B640CF0-E8D2-4D61-808B-9811BAE0A832}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6B640CF0-E8D2-4D61-808B-9811BAE0A832}.Release|Any CPU.Build.0 = Release|Any CPU
+		{717F3681-FB28-4540-8C44-76A736F135A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{717F3681-FB28-4540-8C44-76A736F135A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{717F3681-FB28-4540-8C44-76A736F135A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{717F3681-FB28-4540-8C44-76A736F135A1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
