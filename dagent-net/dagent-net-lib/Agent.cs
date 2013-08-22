@@ -26,10 +26,15 @@ namespace dagent_net_lib
         private void realStart()
         {
         }
-        public void Init(BOOL)
+        public void Init(Boolean autostart)
         {
             this.Main = new Thread(new ThreadStart(this.realStart));
+
             this.Main.Start();
+            if (autostart == true)
+            {
+                this.Start();
+            }
         }
         public void Start()
         {

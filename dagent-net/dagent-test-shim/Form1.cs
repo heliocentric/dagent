@@ -34,5 +34,15 @@ namespace dagent_test_shim
             this.Main.Pause();
         }
 
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.Main.Resume();
+        }
+
+        private void button5_Click(object sender, EventArgs e)
+        {
+            this.Main.ForceSync();
+        }
+
     }
 }
