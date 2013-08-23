@@ -6,13 +6,9 @@ using System.Threading;
 
 namespace dagent_net_lib
 {
-    public class Agent
+    public class Agent : AgentControlContract
     {
-        private Thread Main;
-        public void Run()
-        {
 
-        }
         /* This function contains the start routines for the actual agent thread. 
          * Note, that only init does this, and you only want to init once, normally
          * when the computer is started. 
@@ -22,35 +18,37 @@ namespace dagent_net_lib
          * This allows the code to be in both an embedded library, and a service. 
          * 
          */
-
-        private void realStart()
-        {
-        }
-        public void Init(Boolean autostart)
-        {
-            this.Main = new Thread(new ThreadStart(this.realStart));
-
-            this.Main.Start();
-            if (autostart == true)
-            {
-                this.Start();
-            }
-        }
         public void Start()
         {
         }
 
-        public void Stop()
+        #region AgentControlContract Members
+
+        bool AgentControlContract.Start()
         {
+            throw new NotImplementedException();
         }
-        public void Pause()
+
+        bool AgentControlContract.Stop()
         {
+            throw new NotImplementedException();
         }
-        public void Resume()
+
+        bool AgentControlContract.Pause()
         {
+            throw new NotImplementedException();
         }
-        public void ForceSync()
+
+        bool AgentControlContract.Resume()
         {
+            throw new NotImplementedException();
         }
+
+        bool AgentControlContract.ForceSync()
+        {
+            throw new NotImplementedException();
+        }
+
+        #endregion
     }
 }

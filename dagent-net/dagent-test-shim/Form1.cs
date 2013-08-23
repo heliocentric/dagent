@@ -14,10 +14,10 @@ namespace dagent_test_shim
         public Form1()
         {
             InitializeComponent();
-            this.Main = new Agent();
-            this.Main.Init();
+            this.Main = new Runner();
+            this.Main.Init(false);
         }
-        private Agent Main;
+        private Runner Main;
 
         private void button1_Click(object sender, EventArgs e)
         {
