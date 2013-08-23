@@ -7,18 +7,12 @@ using System.ServiceModel;
 
 namespace dagent_net_lib
 {
-    [ServiceContract]
     interface AgentControlContract
     {
-        [OperationContract]
         Boolean Start();
-        [OperationContract]
         Boolean Stop();
-        [OperationContract]
         Boolean Pause();
-        [OperationContract]
         Boolean Resume();
-        [OperationContract]
         Boolean ForceSync();
     }
 }
