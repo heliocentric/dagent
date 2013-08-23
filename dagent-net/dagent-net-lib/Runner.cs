@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading;
-
+using System.Windows.Forms;
 
 namespace dagent_net_lib
 {
@@ -28,19 +28,24 @@ namespace dagent_net_lib
         }
         public void Start()
         {
+            MessageBox.Show("Starting");
         }
 
         public void Stop()
         {
+            MessageBox.Show("Stopping");
         }
         public void Pause()
         {
+            
+            MessageBox.Show("Pausing");
         }
         public void Resume()
         {
+            MessageBox.Show("Resuming");
         }
-        public void ForceSync()
-        {
+        public void ForceSync() {
+            MessageBox.Show("Syncing");
         }
 
 
