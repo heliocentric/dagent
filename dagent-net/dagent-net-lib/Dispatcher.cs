@@ -24,5 +24,14 @@ namespace dagent_net_lib
                 return this.InputQueue.Dequeue();
             }
         }
+        public void Run()
+        {
+            Boolean end = false;
+            while (end == false)
+            {
+                AgentOperation Op = this.Dequeue();
+
+            }
+        }
     }
 }
