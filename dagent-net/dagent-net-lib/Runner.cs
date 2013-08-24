@@ -18,7 +18,7 @@ namespace dagent_net_lib
         public void Init(Boolean autostart)
         {
             this.agent = new Agent();
-            this.Main = new Thread(new ThreadStart(this.agent.Start));
+            this.Main = new Thread(new ThreadStart(this.agent.Run));
 
             this.Main.Start();
             if (autostart == true)

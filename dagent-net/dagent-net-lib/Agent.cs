@@ -9,12 +9,27 @@ namespace dagent_net_lib
     public class Agent : AgentControlContract
     {
 
-        public void Start()
+        public void Run()
         {
+        }
+        /*
+         * These two threads should only read variables under 'this'
+         * Never write.
+         * This allows us to avoid locking issues.
+         * Any real work is sent to the Process Thread
+         * that waits on global blocking queue.
+         * 
+         */
+        private Thread CommandThread;
+        private Thread MulticastListenThread;
+        private Thread Dispatcherhread;
+        private void RunDispatcherThread()
+        {
+
         }
         #region AgentControlContract Members
 
-        public bool Start()
+        bool AgentControlContract.Start()
         {
             throw new NotImplementedException();
         }
