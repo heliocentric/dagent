@@ -14,34 +14,34 @@ namespace dagent_test_shim
         public Form1()
         {
             InitializeComponent();
-            this.Main = new Runner();
+            this.Main = new AgentControl();
             this.Main.Init(false);
         }
-        private Runner Main;
+        private AgentControl Main;
 
         private void button1_Click(object sender, EventArgs e)
         {
-            this.Main.Start();
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Main.Stop();
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            this.Main.Pause();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            this.Main.Resume();
         }
 
         private void button5_Click(object sender, EventArgs e)
         {
-            this.Main.ForceSync();
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
     }
