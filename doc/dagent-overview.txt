@@ -8,9 +8,17 @@ DAgent Overview
 
 1.1 - Description
 ===================
-DAgent is a distributed agent software program. It's designed to propogate information and control in a decentralized but secure manner. It does this by issuing 'decrees', which are signed lists of edicts. These decrees are distributed freely throughout the network, with the signature determining the key that is used, and the key determining the purpose that key is used, and the level of trust we give the decree.
+DAgent is a distributed agent software program. It's designed to propogate information and control in a decentralized but secure manner. It does this by issuing 'decrees', which are signed lists of edicts. These decrees are distributed freely throughout the network, with the signature determining the key that is used, and the key determining the purpose that key is allowed to vouch for, and the level of trust we give the decree.
 
 There is one 'root' key, which can be used to administratively override agent function. However, the agent assumes faults occur and that information is not always disseminated efficiently. As such, the agent will attempt to make the best guess given the information it has available.
+
+1.2 - Mechanism
+===================
+
+
+1.2.1 - Network Creation
+============
+Network creation is done by using the 'root agent tool' which generates a root GPG keypair. This keypair is self signed, and local to the machine. No keypairs ever have a passphrase, except when it is exported. This keypair is then used to generate the first decree, which contains information like the network name, URLs for any 'known hub' hosts. The tool can also generate and auto-sign keypairs for use in hubs and clients, though this is not always used. It can also generate a config.php file for the PHP hub software. Note that the root key is never used directly, it is just used to sign sub keys which then sign everything else (and which have a restricted purpose). Because the purpose determines the level of trust, keys always have a single and well defined application. A key used to sign codelets will never sign stat information or other keys.
 
 
 2 - Classes
