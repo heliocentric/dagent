@@ -1,0 +1,25 @@
+DAgent Overview
+===============================
+
+
+1 - Design
+=========================
+
+
+1.1 - Description
+===================
+DAgent is a distributed agent software program. It's designed to propogate information and control in a decentralized but secure manner. It does this by issuing 'decrees', which are signed lists of edicts. These decrees are distributed freely throughout the network, with the signature determining the key that is used, and the key determining the purpose that key is used, and the level of trust we give the decree.
+
+There is one 'root' key, which can be used to administratively override agent function. However, the agent assumes faults occur and that information is not always disseminated efficiently. As such, the agent will attempt to make the best guess given the information it has available.
+
+
+2 - Classes
+=========================
+
+
+2.1 - AgentControl
+===================
+
+
+2.2 - Agent
+===================
