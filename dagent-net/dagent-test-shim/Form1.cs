@@ -15,7 +15,7 @@ namespace dagent_test_shim
         {
             InitializeComponent();
             this.Main = new AgentControl();
-            this.Main.Init(false);
+            this.Main.Init(true);
         }
         private AgentControl Main;
 
