@@ -5,6 +5,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dagent-net-lib", "dagent-ne
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dagent-test-shim", "dagent-test-shim\dagent-test-shim.csproj", "{46A49D61-9F53-4107-A629-2D0364149C91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dagent-manager", "dagent-manager\dagent-manager.csproj", "{2478B5F8-3925-46E1-9721-2A663B9E1888}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -19,6 +21,10 @@ Global
 		{46A49D61-9F53-4107-A629-2D0364149C91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{46A49D61-9F53-4107-A629-2D0364149C91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{46A49D61-9F53-4107-A629-2D0364149C91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2478B5F8-3925-46E1-9721-2A663B9E1888}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2478B5F8-3925-46E1-9721-2A663B9E1888}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2478B5F8-3925-46E1-9721-2A663B9E1888}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2478B5F8-3925-46E1-9721-2A663B9E1888}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
