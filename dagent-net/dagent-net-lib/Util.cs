@@ -5,7 +5,6 @@ using System.Text;
 using System.Management.Instrumentation;
 using System.Management;
 using System.Diagnostics;
-
 namespace dagent_net_lib
 {
     public class Util
@@ -44,6 +43,21 @@ namespace dagent_net_lib
         public static String getMacAddress()
         {
             return "";
+        }
+        public static String getInstalledDate()
+        {
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.LocalMachine.OpenSubKey(@"\SOFTWARE\Microsoft\Windows NT\CurrentVersion");
+            if (key != null)
+            {
+                DateTime startDate = new DateTime(1970, 1, 1, 0, 0, 0);
+                Int64 regVal = Convert.ToInt64(key.GetValue("InstallDate").ToString());
+
+                DateTime installDate = startDate.AddSeconds(regVal);
+
+                return installDate.ToString();
+            }
+
+            return "NULL";
         }
         public static String getOSKernel()
         {

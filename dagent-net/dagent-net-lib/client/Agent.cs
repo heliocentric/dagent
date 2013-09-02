@@ -14,7 +14,7 @@ namespace dagent_net_lib
         public String Hostname = "127.0.0.1";
         public String Password = "guest";
         public String Username = "guest";
-        public String UUID = "00000000-0000-0000-0000-000000000000";
+        public String UUID = System.Guid.NewGuid().ToString();
         public int Port = 5672;
         public void Init()
         {
@@ -70,7 +70,7 @@ namespace dagent_net_lib
                     while (end != true)
                     {
                         counter += 1;
-                        counter = counter % 5;
+                        counter = counter % 15;
                         var message = "<dagent>";
                         message += "<hostinfo>";
                         message += "<uuid>" + this.UUID + "</uuid>";
@@ -87,6 +87,7 @@ namespace dagent_net_lib
                             message += "<uptime>" + Util.getUptime() + "</uptime>";
                             message += "<user>" + Util.getUserName() + "</user>";
                             message += "<hostname>" + Util.getHostName() + "</hostname>";
+                            message += "<installeddate>" + Util.getInstalledDate() + "</installeddate>";
                             message += "<ipaddress>" + Util.getIPAddress() + "</ipaddress>";
                             message += "<macaddress>" + Util.getMacAddress() + "</macaddress>";
                             message += "<os>" + Util.getOperatingSystem() + "</os>";
