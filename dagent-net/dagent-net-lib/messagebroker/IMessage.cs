@@ -7,6 +7,11 @@ namespace dagent_net_lib.messagebroker
 {
     public interface IMessage
     {
+        string Type
+        {
+            get;
+            set;
+        }
         string From
         {
             get;

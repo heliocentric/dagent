@@ -9,7 +9,7 @@ namespace dagent_net_lib.messagebroker
     {
         #region IMessage Members
 
-        byte[] IMessage.Data
+        public byte[] Data
         {
             get
             {
@@ -21,7 +21,7 @@ namespace dagent_net_lib.messagebroker
             }
         }
 
-        string IMessage.From
+        public string From
         {
             get
             {
@@ -47,5 +47,21 @@ namespace dagent_net_lib.messagebroker
             }
         }
 
+
+        #region IMessage Members
+        private string _type;
+        public string Type
+        {
+            get
+            {
+                return this._type;
+            }
+            set
+            {
+                this._type = value;
+            }
+        }
+
+        #endregion
     }
 }

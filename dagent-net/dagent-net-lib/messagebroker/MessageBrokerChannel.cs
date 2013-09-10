@@ -21,7 +21,18 @@ namespace dagent_net_lib.messagebroker
         }
         public Boolean Send(IMessage message)
         {
-            return false;
+            if (message.Type != null)
+            {
+                var properties = this._channel.CreateBasicProperties();
+                properties.DeliveryMode = 2;
+                this._channel.ExchangeDeclare(message.Type, "fanout");
+                this._channel.BasicPublish(message.Type, "", properties, message.Data);
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

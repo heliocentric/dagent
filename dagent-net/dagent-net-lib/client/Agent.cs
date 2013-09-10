@@ -31,6 +31,7 @@ namespace dagent_net_lib
             while (end != true)
             {
                 TextMessage msg = new TextMessage();
+                msg.Type = "dagent.presence";
                 counter += 1;
                 counter = counter % 15;
                 msg.value = "<dagent>";
@@ -39,7 +40,8 @@ namespace dagent_net_lib
                 msg.value += "<uptime>" + Util.getUptime() + "</uptime>";
                 msg.value += "</hostinfo>";
                 msg.value += "</dagent>";
-
+                channel.Send(msg);
+                msg.Type = "dagent.hostinfo";
                 if (counter == 1)
                 {
                     msg.value = "<dagent>";
@@ -56,7 +58,8 @@ namespace dagent_net_lib
                     msg.value += "<architecture>" + Util.getArchitecture() + "</architecture>";
                     msg.value += "</hostinfo>";
                     msg.value += "</dagent>";
-                    MessageBox.Show(msg.value);
+                    channel.Send(msg);
+                    // MessageBox.Show(msg.value);
                 }
 
                 /* sleep for approximately 1 minute */
