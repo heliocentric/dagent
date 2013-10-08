@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using RabbitMQ.Client;
 using System.Net;
+using Heijden.DNS;
 
 namespace dagent_net_lib.messagebroker
 {
@@ -44,35 +45,48 @@ namespace dagent_net_lib.messagebroker
             this.UUID = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "uuid", this.UUID);
             this.Port = Util.checkregint("HKLM", @"SOFTWARE\dagent\messagebroker", "port", this.Port);
             this.Vhost = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "vhost", this.Vhost);
-            IPHostEntry ipentry = Dns.GetHostEntry(this.Hostname);
-            foreach (IPAddress ip in ipentry.AddressList)
-            {
-                try
-                {
-                    Util.log(this.ToString(), 99, "Attempting connection to " + ip.ToString() + ":" + this.Port.ToString());
-                    var factory = new ConnectionFactory()
-                    {
-                        HostName = ip.ToString(),
-                        Password = this.Password,
-                        UserName = this.Username,
-                        Port = this.Port,
-                        VirtualHost = this.Vhost   
-                    };
-                    this._connection = factory.CreateConnection();
-                    break;
-                }
-                catch (Exception e)
-                {
-                    Util.log(this.ToString(), 1, e.ToString());
-                }
+            /* 
+             * Look for TXT records defining all the possible access methods which are available.
+             */
+            Resolver Resolver = new Resolver();
+            Response response = Resolver.Query(this.Hostname,QType.TXT,QClass.ANY);
 
-            }
+            /*
+             * Fallback method to use DNS A Records
+             */
             if (this._connection == null)
             {
-                Util.log(this.ToString(), 0, "Unable to connect to " + this.Hostname);
-                throw new Exception();
+                IPHostEntry ipentry = Dns.GetHostEntry(this.Hostname);
+                foreach (IPAddress ip in ipentry.AddressList)
+                {
+                    try
+                    {
+                        Util.log(this.ToString(), 99, "Attempting connection to " + ip.ToString() + ":" + this.Port.ToString());
+                        var factory = new ConnectionFactory()
+                        {
+                            HostName = ip.ToString(),
+                            Password = this.Password,
+                            UserName = this.Username,
+                            Port = this.Port,
+                            VirtualHost = this.Vhost
+                        };
+                        this._connection = factory.CreateConnection();
+                        break;
+                    }
+                    catch (Exception e)
+                    {
+                        Util.log(this.ToString(), 1, e.ToString());
+                    }
+
+                }
+                if (this._connection == null)
+                {
+                    Util.log(this.ToString(), 0, "Unable to connect to " + this.Hostname);
+                    return false;
+                }
+                return true;
             }
-            return true;
+            return false;
         }
     }
 }
