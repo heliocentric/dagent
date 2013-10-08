@@ -1,0 +1,22 @@
+format:
+
+this is NOT case sensitive.
+
+DAGENT!SPECIFICATION!MASK!APPPROTOCOL!NETWORK!NETWORKADDRESS!TRANSPORTPROTOCOL!TRANSPORTPORT
+
+SPECIFICATION is:
+
+ANY
+PUBLICIP
+ROUTERMAC
+
+MASK is a mask (right now, no globbing) for this network to match.
+NETWORK is the network type, either ipv4 or ipv6
+NETWORKADDRESS is the network address.
+TRANSPORTPROTOCOL is either tcp, udp, or sctp
+TRANSPORTPORT is the port number.
+APPPROTOCOL is either rabbitmq-nossl or rabbitmq-ssl (not supported)
+
+ex:
+
+DAGENT!ANY!ANY!rabbitmq-nossl!ipv4!127.0.0.1!tcp!5672

@@ -61,12 +61,17 @@ namespace dagent_net_lib.messagebroker
                     this._connection = factory.CreateConnection();
                     break;
                 }
-                catch (Exception)
+                catch (Exception e)
                 {
+                    Util.log(this.ToString(), 1, e.ToString());
                 }
 
             }
-
+            if (this._connection == null)
+            {
+                Util.log(this.ToString(), 0, "Unable to connect to " + this.Hostname);
+                throw new Exception();
+            }
             return true;
         }
     }
