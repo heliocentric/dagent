@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using RabbitMQ.Client;
+using System.Net;
+
 namespace dagent_net_lib.messagebroker
 {
     public class MessageBroker
@@ -42,6 +44,7 @@ namespace dagent_net_lib.messagebroker
             this.UUID = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "uuid", this.UUID);
             this.Port = Util.checkregint("HKLM", @"SOFTWARE\dagent\messagebroker", "port", this.Port);
             this.Vhost = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "vhost", this.Vhost);
+            IPHostEntry ipentry = Dns.GetHostEntry(this.Hostname);
             var factory = new ConnectionFactory()
             {
                 HostName = this.Hostname,

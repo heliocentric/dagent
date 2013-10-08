@@ -10,6 +10,9 @@ namespace dagent_net_lib
 {
     public class Util
     {
+        public static void log(String component, short priority, String Message)
+        {
+        }
         /*
          * These routines exist solely to abstract it into something like sqlite later
          */
