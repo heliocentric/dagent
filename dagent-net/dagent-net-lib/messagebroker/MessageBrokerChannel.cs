@@ -17,8 +17,12 @@ namespace dagent_net_lib.messagebroker
 
         public IMessage Receive()
         {
-            return new messagebroker.Message();
+            Message msg = new Message();
+            
+            return msg;
         }
+
+
         public Boolean Send(IMessage message)
         {
             if (message.Type != null)

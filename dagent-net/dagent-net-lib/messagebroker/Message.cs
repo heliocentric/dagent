@@ -7,64 +7,46 @@ namespace dagent_net_lib.messagebroker
 {
     public class Message : IMessage
     {
+        private string _from;
         public string From
         {
             get
             {
-                return "";
+                return this._from;
             }
             set
             {
+                this._from = value;
             }
         }
+        private Byte[] _data;
         public Byte[] Data
         {
             get
             {
-                return new Byte[1];
+                return this._data;
             }
             set
             {
+                this._data = value;
             }
         }
 
         #region IMessage Members
 
-        string IMessage.Type
+        private string _type;
+        public string Type
         {
             get
             {
-                throw new NotImplementedException();
+                return this._type;
             }
             set
             {
-                throw new NotImplementedException();
+                this._type = value;
             }
         }
 
-        string IMessage.From
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        byte[] IMessage.Data
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
 
         #endregion
     }

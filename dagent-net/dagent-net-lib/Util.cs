@@ -5,17 +5,47 @@ using System.Text;
 using System.Management.Instrumentation;
 using System.Management;
 using System.Diagnostics;
+using Microsoft.Win32;
 namespace dagent_net_lib
 {
     public class Util
     {
+        /*
+         * These routines exist solely to abstract it into something like sqlite later
+         */
         public static String checkregstring(string hive_HKLM_or_HKCU, string registryRoot, string valueName, string defaultvalue)
         {
-            return defaultvalue;
-        }
+            string keyName;
+            switch (hive_HKLM_or_HKCU)
+            {
+                case "HKLM":
+                    keyName = "HKEY_LOCAL_MACHINE\\" + registryRoot;
+                    break;
+                case "HKCU":
+                default:
+                    keyName = "HKEY_CURRENT_USER\\" + registryRoot;
+                    break;
+            }
+            string retval = (string) Registry.GetValue(keyName, valueName, defaultvalue);
+            Registry.SetValue(keyName, valueName, retval);
+            return retval;
+       }
         public static int checkregint(string hive_HKLM_or_HKCU, string registryRoot, string valueName, int defaultvalue)
         {
-            return defaultvalue;
+            string keyName;
+            switch (hive_HKLM_or_HKCU)
+            {
+                case "HKLM":
+                    keyName = "HKEY_LOCAL_MACHINE\\" + registryRoot;
+                    break;
+                case "HKCU":
+                default:
+                    keyName = "HKEY_CURRENT_USER\\" + registryRoot;
+                    break;
+            }
+            int retval = (int)Registry.GetValue(keyName, valueName, defaultvalue);
+            Registry.SetValue(keyName, valueName, retval);
+            return retval;
         }
         public static double getUptime()
         {

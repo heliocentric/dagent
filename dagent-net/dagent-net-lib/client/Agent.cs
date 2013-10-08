@@ -15,10 +15,12 @@ namespace dagent_net_lib
         public void Init()
         {
             this.Broker = new MessageBroker();
+            this.random = new Random();
         }
         private Thread MQWorker;
         private IModel MQWorker_Channel;
         private MessageBroker Broker;
+        private Random random;
         private void MQWorker_Run()
         {
         }
@@ -63,7 +65,7 @@ namespace dagent_net_lib
                 }
 
                 /* sleep for approximately 1 minute */
-                Thread.Sleep(60000);
+                Thread.Sleep(60000 + this.random.Next(1,30));
             }
         }
     }
