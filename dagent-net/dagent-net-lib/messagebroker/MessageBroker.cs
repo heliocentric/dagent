@@ -45,15 +45,27 @@ namespace dagent_net_lib.messagebroker
             this.Port = Util.checkregint("HKLM", @"SOFTWARE\dagent\messagebroker", "port", this.Port);
             this.Vhost = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "vhost", this.Vhost);
             IPHostEntry ipentry = Dns.GetHostEntry(this.Hostname);
-            var factory = new ConnectionFactory()
+            foreach (IPAddress ip in ipentry.AddressList)
             {
-                HostName = this.Hostname,
-                Password = this.Password,
-                UserName = this.Username,
-                Port = this.Port,
-                VirtualHost = this.Vhost
-            };
-            this._connection = factory.CreateConnection();
+                try
+                {
+                    Util.log(this.ToString(), 99, "Attempting connection to " + ip.ToString() + ":" + this.Port.ToString());
+                    var factory = new ConnectionFactory()
+                    {
+                        HostName = ip.ToString(),
+                        Password = this.Password,
+                        UserName = this.Username,
+                        Port = this.Port,
+                        VirtualHost = this.Vhost   
+                    };
+                    this._connection = factory.CreateConnection();
+                    break;
+                }
+                catch (Exception)
+                {
+                }
+
+            }
 
             return true;
         }

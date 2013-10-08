@@ -6,12 +6,14 @@ using System.Management.Instrumentation;
 using System.Management;
 using System.Diagnostics;
 using Microsoft.Win32;
+using System.Windows.Forms;
 namespace dagent_net_lib
 {
     public class Util
     {
         public static void log(String component, short priority, String Message)
         {
+            MessageBox.Show(component + " - " + Message);
         }
         /*
          * These routines exist solely to abstract it into something like sqlite later
