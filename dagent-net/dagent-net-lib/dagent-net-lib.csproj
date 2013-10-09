@@ -31,6 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="GnuPGDotNet, Version=1.0.1033.26026, Culture=neutral">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\contrib\GnuPGDotNet\bin\GnuPGDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="RabbitMQ.Client, Version=3.1.5.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\contrib\rabbitmq-dotnet-client-3.1.5-dotnet-3.0\bin\RabbitMQ.Client.dll</HintPath>
@@ -63,6 +67,7 @@
     <Compile Include="keymanager\KeyData.cs" />
     <Compile Include="keymanager\Manager.cs" />
     <Compile Include="keymanager\Signer.cs" />
+    <Compile Include="messagebroker\Connector.cs" />
     <Compile Include="messagebroker\Exchange.cs" />
     <Compile Include="messagebroker\IMessage.cs" />
     <Compile Include="messagebroker\Message.cs" />

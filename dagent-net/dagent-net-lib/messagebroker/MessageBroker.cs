@@ -10,10 +10,10 @@ namespace dagent_net_lib.messagebroker
 {
     public class MessageBroker
     {
-        public MessageBroker() : this("127.0.0.1","guest","guest",5672,System.Guid.NewGuid().ToString(),"/")
+        public MessageBroker() : this("127.0.0.1","guest","guest",5672,System.Guid.NewGuid().ToString(),"/", "")
         {
         }
-        public MessageBroker(String hostname, String username, String password, int port, string UUID, string Vhost)
+        public MessageBroker(String hostname, String username, String password, int port, string UUID, string Vhost, string Rootkey)
         {
             this.Hostname = hostname;
             this.Username = username;
@@ -21,6 +21,7 @@ namespace dagent_net_lib.messagebroker
             this.Port = port;
             this.UUID = UUID;
             this.Vhost = Vhost;
+            this.RootKey = Rootkey;
             this.Init();
         }
         public String Vhost;
@@ -28,6 +29,7 @@ namespace dagent_net_lib.messagebroker
         public String Password;
         public String Username;
         public String UUID;
+        public String RootKey;
         public int Port;
         public MessageBrokerChannel NewChannel()
         {
@@ -45,12 +47,35 @@ namespace dagent_net_lib.messagebroker
             this.UUID = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "uuid", this.UUID);
             this.Port = Util.checkregint("HKLM", @"SOFTWARE\dagent\messagebroker", "port", this.Port);
             this.Vhost = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "vhost", this.Vhost);
+            this.RootKey = Util.checkregstring("HKLM", @"SOFTWARE\dagent\messagebroker", "rootkey", this.RootKey);
             /* 
              * Look for TXT records defining all the possible access methods which are available.
              */
             Resolver Resolver = new Resolver();
             Response response = Resolver.Query(this.Hostname,QType.TXT,QClass.ANY);
-
+            LinkedList<String> AnyConnector = new LinkedList<string>();
+            foreach (AnswerRR answerRR in response.Answers)
+            {
+                switch (answerRR.Type)
+                {
+                    case Heijden.DNS.Type.TXT:
+                        String[] strippedresponse = answerRR.RECORD.ToString().Split('\"');
+                        String[] value = strippedresponse[1].Split('!');
+                        if (value[0].ToLower().Equals("dagent"))
+                        {
+                            switch (value[1].ToLower())
+                            {
+                                case "connector":
+                                    Connector conn = new Connector(value, 2);
+                                    Util.log(this.ToString(), 99, conn.ToString());
+                                    break;
+                                case "rootkey":
+                                    break;
+                            }
+                        }
+                        break;
+                }
+            }
             /*
              * Fallback method to use DNS A Records
              */
