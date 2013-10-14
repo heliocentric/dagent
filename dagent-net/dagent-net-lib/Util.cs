@@ -21,7 +21,7 @@ namespace dagent_net_lib
         {
             if (Util._loghandler == null)
             {
-                Util._loghandler = new loghandler(Util.MessageBoxLogHandler);
+                Util.setloghandler(new loghandler(Util.MessageBoxLogHandler));
             }
             Util._loghandler(component, priority, Message);
         }
@@ -127,6 +127,19 @@ namespace dagent_net_lib
         public static String getArchitecture()
         {
             return "";
+        }
+        public static String getRouterMac()
+        {
+            return "";
+        }
+        public static String getPublicIp()
+        {
+            String URL = "http://www.niftyengineering.com/ip.php";
+            return "";
+        }
+        public static String getApplicationPath()
+        {
+            return System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().GetName().CodeBase);
         }
     }
 }

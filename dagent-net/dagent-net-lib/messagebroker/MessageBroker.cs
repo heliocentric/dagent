@@ -31,6 +31,7 @@ namespace dagent_net_lib.messagebroker
         public String UUID;
         public String RootKey;
         public int Port;
+        private MessageBrokerChannel persistant;
         public MessageBrokerChannel NewChannel()
         {
             MessageBrokerChannel channel = new MessageBrokerChannel(this._connection.CreateModel());
@@ -117,6 +118,11 @@ namespace dagent_net_lib.messagebroker
                     Util.log(this.ToString(), 0, "Unable to connect to " + this.Hostname);
                     return false;
                 }
+
+                this.persistant = this.NewChannel();
+                String queuename = "persist." + this.UUID + ".control";
+                this.persistant.QueueDeclare(queuename,true);
+                this.persistant.QueueBind(queuename, "dagent.control", "");
                 return true;
             }
             return false;

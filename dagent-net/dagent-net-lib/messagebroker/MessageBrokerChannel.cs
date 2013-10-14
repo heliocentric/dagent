@@ -21,8 +21,23 @@ namespace dagent_net_lib.messagebroker
             
             return msg;
         }
-
-
+        public void QueueBind(String Name, String Exchange, String Key)
+        {
+            this._channel.ExchangeDeclare(Exchange, "fanout");
+            this._channel.QueueBind(Name, Exchange, Key);
+        }
+        public MessageQueue QueueDeclare()
+        {
+            return new MessageQueue(this, this._channel.QueueDeclare());
+        }
+        public MessageQueue QueueDeclare(String Name)
+        {
+            return new MessageQueue(this, this._channel.QueueDeclare(Name,false,false,false,null));
+        }
+        public MessageQueue QueueDeclare(String Name, Boolean Durable)
+        {
+            return new MessageQueue(this, this._channel.QueueDeclare(Name, Durable, false, false, null));
+        }
         public Boolean Send(IMessage message)
         {
             if (message.Type != null)

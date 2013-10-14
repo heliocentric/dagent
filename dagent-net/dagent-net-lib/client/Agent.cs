@@ -17,17 +17,14 @@ namespace dagent_net_lib
             this.Broker = new MessageBroker();
             this.random = new Random();
         }
-        private Thread MQWorker;
-        private IModel MQWorker_Channel;
         private MessageBroker Broker;
         private Random random;
-        private void MQWorker_Run()
-        {
-        }
 
-        public void Run()
+
+        private Thread HostInfo;
+        private MessageBrokerChannel HostInfo_Channel;
+        private void HostInfo_Run()
         {
-            MessageBrokerChannel channel = this.Broker.NewChannel();
             int counter = 0;
             Boolean end = false;
             while (end != true)
@@ -42,7 +39,7 @@ namespace dagent_net_lib
                 msg.value += "<uptime>" + Util.getUptime() + "</uptime>";
                 msg.value += "</hostinfo>";
                 msg.value += "</dagent>";
-                channel.Send(msg);
+                this.HostInfo_Channel.Send(msg);
                 msg.Type = "dagent.hostinfo";
                 if (counter == 1)
                 {
@@ -60,13 +57,30 @@ namespace dagent_net_lib
                     msg.value += "<architecture>" + Util.getArchitecture() + "</architecture>";
                     msg.value += "</hostinfo>";
                     msg.value += "</dagent>";
-                    channel.Send(msg);
+                    this.HostInfo_Channel.Send(msg);
                     // MessageBox.Show(msg.value);
                 }
 
                 /* sleep for approximately 1 minute */
-                Thread.Sleep(60000 + this.random.Next(1,30));
+                Thread.Sleep(50000 + this.random.Next(1,30));
             }
+        
+        }
+
+        private Thread KeyManagerThread;
+        public MessageBrokerChannel KeyManager_Channel;
+        public keymanager.Manager KeyManager;
+        public void KeyManager_Run()
+        {
+        }
+        public void Run()
+        {
+            this.KeyManager = new keymanager.Manager(this.Broker.UUID);
+            this.HostInfo_Channel = this.Broker.NewChannel();
+            this.HostInfo = new Thread(new ThreadStart(this.HostInfo_Run));
+            this.HostInfo.Start();
+            this.KeyManager_Channel = this.Broker.NewChannel();
+            this.KeyManagerThread = new Thread(new ThreadStart(this.KeyManager_Run));
         }
     }
 }
