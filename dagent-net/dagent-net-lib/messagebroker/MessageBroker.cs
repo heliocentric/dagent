@@ -53,7 +53,9 @@ namespace dagent_net_lib.messagebroker
              */
             Resolver Resolver = new Resolver();
             Response response = Resolver.Query(this.Hostname,QType.TXT,QClass.ANY);
-            LinkedList<String> AnyConnector = new LinkedList<string>();
+            LinkedList<Connector> AnyConnector = new LinkedList<Connector>();
+            LinkedList<Connector> MacConnector = new LinkedList<Connector>();
+            LinkedList<Connector> RouterIPConnector = new LinkedList<Connector>();
             foreach (AnswerRR answerRR in response.Answers)
             {
                 switch (answerRR.Type)
@@ -68,6 +70,12 @@ namespace dagent_net_lib.messagebroker
                                 case "connector":
                                     Connector conn = new Connector(value, 2);
                                     Util.log(this.ToString(), 99, conn.ToString());
+                                    switch (conn.Match)
+                                    {
+                                        case "any":
+                                            AnyConnector.AddLast(conn);
+                                            break;
+                                    }
                                     break;
                                 case "rootkey":
                                     break;

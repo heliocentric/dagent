@@ -11,7 +11,21 @@ namespace dagent_net_lib
 {
     public class Util
     {
+        public delegate void loghandler(String component, short priority, String Message);
+        private static loghandler _loghandler;
+        public static void setloghandler(loghandler handler)
+        {
+            Util._loghandler = handler;
+        }
         public static void log(String component, short priority, String Message)
+        {
+            if (Util._loghandler == null)
+            {
+                Util._loghandler = new loghandler(Util.MessageBoxLogHandler);
+            }
+            Util._loghandler(component, priority, Message);
+        }
+        private static void MessageBoxLogHandler(String component, short priority, String Message)
         {
             MessageBox.Show(component + " - " + Message);
         }

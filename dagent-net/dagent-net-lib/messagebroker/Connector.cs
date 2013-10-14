@@ -22,13 +22,13 @@ namespace dagent_net_lib.messagebroker
         }
         public void Constructor(String[] Connectorspec, int index)
         {
-            this.Match = Connectorspec[index];
-            this.Expression = Connectorspec[index + 1];
-            this.ApplicationProtocol = Connectorspec[index + 2];
-            this.NetworkProtocol = Connectorspec[index + 3];
-            this.NetworkAddress = Connectorspec[index + 4];
-            this.TransportProtocol = Connectorspec[index + 5];
-            this.TransportPort = Connectorspec[index + 6];
+            this.Match = Connectorspec[index].ToLower();
+            this.Expression = Connectorspec[index + 1].ToLower();
+            this.ApplicationProtocol = Connectorspec[index + 2].ToLower();
+            this.NetworkProtocol = Connectorspec[index + 3].ToLower();
+            this.NetworkAddress = Connectorspec[index + 4].ToLower();
+            this.TransportProtocol = Connectorspec[index + 5].ToLower();
+            this.TransportPort = Connectorspec[index + 6].ToLower();
         }
         public String Match;
         public String Expression;
