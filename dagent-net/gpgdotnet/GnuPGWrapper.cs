@@ -52,7 +52,23 @@ namespace Emmanuel.Cryptography.GnuPG
 		/// <summary>
 		/// Assume that input is a signature and verify it without generating any output
 		/// </summary>
-		Verify
+		Verify,
+		/// <summary>
+		/// Generate a KeyPair
+		/// </summary>
+        KeyGen,
+        /// <summary>
+        /// Find a key.
+        /// </summary>
+        FindKey,
+        /// <summary>
+        /// Import a public key
+        /// </summary>
+        Import,
+		/// <summary>
+		/// Export a public key
+		/// </summary>
+		Export
 	};
 	// TODO implement other GPG commands (--clearsign, --detach-sign, --symmetric, --store, --verify-files, --encrypt-files, --decrypt-files, --list-keys, --list-public-keys, --list-secret-keys, --list-sigs, --check-sigs, --fingerprint, --check-sigs, --list-packets, --gen-key, --edit-key, --sign-key, --lsign-key, --nrsign-key, --delete-key, --delete-secret-key, --delete-secret-and-public-key, --gen-revoke, --desig-revoke, --export, --send-keys, --export-all, --export-secret-keys, --export-secret-subkeys, --import, --fast-import, --recv-keys, --search-keys, --update-trustdb, --check-trustdb, --export-ownertrust, --import-ownertrust, --rebuild-keydb-caches, --print-md, --print-mds, --gen-random, --gen-prime mode, --version, --warranty, --help)
 
@@ -345,6 +361,12 @@ namespace Emmanuel.Cryptography.GnuPG
 				case Commands.Verify:
 					optionsBuilder.Append("--verify ");
 					break;
+                case Commands.KeyGen:
+                    optionsBuilder.Append("--gen-key ");
+                    break;
+                case Commands.FindKey:
+                    optionsBuilder.Append("");
+                    break;
 			}
 
 			// ASCII output?

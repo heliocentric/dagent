@@ -21,9 +21,15 @@ namespace dagent_net_lib.keymanager
         public void Constructor(String UUID)
         {
             this.FindGnuPG("");
-
+            this.gpg = new GnuPGWrapper(this.gpgpath);
+            this.gpghomepath = Util.getApplicationPath() + Path.DirectorySeparatorChar + "gnupg";
+            this.gpg.homedirectory = this.gpghomepath;
+            if (!Directory.Exists(this.gpghomepath)) {
+                Directory.CreateDirectory(this.gpghomepath.Replace("file:\\", ""));
+            }
         }
         private String gpgpath;
+        private String gpghomepath;
         private GnuPGWrapper gpg;
         public void FindGnuPG(String HintPath)
         {
@@ -38,26 +44,12 @@ namespace dagent_net_lib.keymanager
                 String gpgexepath = path + Path.DirectorySeparatorChar + "gpg2.exe";
                 if (File.Exists(gpgexepath))
                 {
-                    gnupgpath = gpgexepath;
+                    gnupgpath = path;
                     break;
                 }
             }
             this.gpgpath = gnupgpath;
             Util.log(this.ToString(), 99, "Path to gpg.exe: " + this.gpgpath);
-        }
-        public void RunGnuPG(String Options, StreamWriter stdin, StreamReader stdout)
-        {
-            /*
-            ProcessStartInfo processinfo = new ProcessStartInfo(this.gpgpath, Options);
-            processinfo.WorkingDirectory = Path.GetDirectoryName(this.gpgpath);
-            processinfo.CreateNoWindow = true;
-            processinfo.UseShellExecute = false;
-            processinfo.RedirectStandardInput = true;
-            processinfo.RedirectStandardOutput = true;
-            processinfo.RedirectStandardError = true;
-            Process proc = Process.Start(pinfo);
-             */
-            this.gpg = new GnuPGWrapper();
         }
         public KeyData Sign(KeyData data) 
         {
