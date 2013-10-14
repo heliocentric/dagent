@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "dagent-manager", "dagent-ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Heijden", "ClassLibrary1\Heijden.csproj", "{E846A0C2-6622-414F-B3C2-0C86FC3864D9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gpgdotnet", "gpgdotnet\gpgdotnet.csproj", "{1AF3A364-22C7-46CA-B86C-DBAA8951CA44}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{E846A0C2-6622-414F-B3C2-0C86FC3864D9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E846A0C2-6622-414F-B3C2-0C86FC3864D9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E846A0C2-6622-414F-B3C2-0C86FC3864D9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1AF3A364-22C7-46CA-B86C-DBAA8951CA44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1AF3A364-22C7-46CA-B86C-DBAA8951CA44}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1AF3A364-22C7-46CA-B86C-DBAA8951CA44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1AF3A364-22C7-46CA-B86C-DBAA8951CA44}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

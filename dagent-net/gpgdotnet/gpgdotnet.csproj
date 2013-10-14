@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{0A8F2C90-16A8-4935-A545-A69FB2177344}</ProjectGuid>
+    <ProjectGuid>{1AF3A364-22C7-46CA-B86C-DBAA8951CA44}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>dagent_net_lib</RootNamespace>
-    <AssemblyName>dagent-net-lib</AssemblyName>
+    <RootNamespace>gpgdotnet</RootNamespace>
+    <AssemblyName>gpgdotnet</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,22 +31,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="RabbitMQ.Client, Version=3.1.5.0, Culture=neutral, PublicKeyToken=89e7d7c5feba84ce, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\contrib\rabbitmq-dotnet-client-3.1.5-dotnet-3.0\bin\RabbitMQ.Client.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
-    <Reference Include="System.Management" />
-    <Reference Include="System.Management.Instrumentation">
-      <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.ServiceModel">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
@@ -57,38 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="client\Agent.cs" />
-    <Compile Include="client\AgentControl.cs" />
-    <Compile Include="keymanager\Key.cs" />
-    <Compile Include="keymanager\KeyData.cs" />
-    <Compile Include="keymanager\Manager.cs" />
-    <Compile Include="keymanager\Signer.cs" />
-    <Compile Include="messagebroker\Connector.cs" />
-    <Compile Include="messagebroker\Exchange.cs" />
-    <Compile Include="messagebroker\IMessage.cs" />
-    <Compile Include="messagebroker\Message.cs" />
-    <Compile Include="messagebroker\MessageBroker.cs" />
-    <Compile Include="messagebroker\MessageBrokerChannel.cs" />
-    <Compile Include="messagebroker\MessageQueue.cs" />
-    <Compile Include="messagebroker\TextMessage.cs" />
+    <Compile Include="GnuPGWrapper.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Util.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <WCFMetadata Include="Service References\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\ClassLibrary1\Heijden.csproj">
-      <Project>{E846A0C2-6622-414F-B3C2-0C86FC3864D9}</Project>
-      <Name>Heijden</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\gpgdotnet\gpgdotnet.csproj">
-      <Project>{1AF3A364-22C7-46CA-B86C-DBAA8951CA44}</Project>
-      <Name>gpgdotnet</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="manager\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

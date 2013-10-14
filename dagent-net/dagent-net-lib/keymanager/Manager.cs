@@ -58,7 +58,6 @@ namespace dagent_net_lib.keymanager
             Process proc = Process.Start(pinfo);
              */
             this.gpg = new GnuPGWrapper();
-
         }
         public KeyData Sign(KeyData data) 
         {
