@@ -1,0 +1,338 @@
+<HTML>
+<HEAD>
+<META http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<TITLE>Emmanuel.Cryptography.GnuPG.GnuPGWrapper</TITLE>
+<LINK REL=STYLESHEET HREF="../CommentReport.css" TYPE="text/css">
+</HEAD>
+<BODY topmargin=0 rightmargin=0 leftmargin=0 style="background-image: url(../titletile.jpg); background-repeat:repeat-x; background-position: 0 0;" >
+<DIV CLASS="PageHeading">Emmanuel.Cryptography.GnuPG.GnuPGWrapper Class</DIV>
+<DIV CLASS="Description">
+
+This class is a wrapper class for GNU Privacy Guard (GnuPG). It execute the command 
+line program (gpg.exe) in an different process, redirects standard input (stdin),
+standard output (stdout) and standard error (stderr) streams, and monitors the 
+streams to fetch the results of the encryption/signing operation.<p/>
+
+Please note that you must have INSTALLED GnuPG AND generated/imported the 
+appropriate keys before using this class.<p/>
+
+GnuPG stands for GNU Privacy Guard and is GNU's tool for secure communication and 
+data storage. It can be used to encrypt data and to create digital signatures. It 
+includes an advanced key management facility and is compliant with the proposed 
+OpenPGP Internet standard as described in RFC 2440. As such, GnuPG is a complete 
+and free replacement for PGP.<p/>
+
+This class has been developed and tested with GnuPG v1.2.0 (MingW32)<p/>
+
+For more about GNU, please refer to http://www.gnu.org <br/>
+For more about GnuPG, please refer to http://www.gnupg.org <br/>
+For more about OpenPGP (RFC 2440), please refer to http://www.gnupg.org/rfc2440.html <br/>
+<P>
+
+</DIV>
+<IMG src="../GradLeft.jpg" width=7 height=378 alt="" border="0" style="position:absolute; left:10; top:18;z-Index:2">
+<IMG src="../GradTop.jpg" width=352 height=7 alt="" border="0" align="top" style="position:absolute; left:10; top:18; z-index:1">
+<DIV CLASS="Remarks">
+<SPAN CLASS="RemarkHdrX">Access: </SPAN>Public</DIV>
+<DIV CLASS="Remarks">
+<SPAN CLASS="RemarkHdrX">Base Classes: </SPAN>Object</DIV>
+<TABLE CLASS="InfoTable" cellpadding=0 cellspacing=0>
+<TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD valign=top align=left width=9 bgcolor="#cccc66"><IMG SRC="../graycorner.jpg" align=top></TD>
+<TD CLASS="TableLightLabel" WIDTH=206>Members</TD>
+<TD CLASS="TableLightLabel" >Description</TD>
+<TD width=20>&nbsp;</TD>
+</TR>
+<TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP26.HTM" TARGET="CNTFRAME">GnuPGWrapper</A></TD>
+<TD CLASS="TableLightDesc">
+Default constructor
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP27.HTM" TARGET="CNTFRAME">GnuPGWrapper</A></TD>
+<TD CLASS="TableLightDesc">
+Constructor
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP28.HTM" TARGET="CNTFRAME">command</A></TD>
+<TD CLASS="TableLightDesc">
+Command property: set the type of command to execute (sign, encrypt...)
+
+<p/>Defaults to SignAndEncrypt.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP31.HTM" TARGET="CNTFRAME">armor</A></TD>
+<TD CLASS="TableLightDesc">
+Boolean flag: if true, GnuPG creates ASCII armored output (text output). 
+
+<p/>Defaults to true (ASCII ouput).
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP33.HTM" TARGET="CNTFRAME">recipient</A></TD>
+<TD CLASS="TableLightDesc">
+Recipient email address - mandatory when <see cref="command">command</see> is Encrypt or SignAndEncrypt
+
+<p/>GnuPG uses this parameter to find the associated public key. You must have imported 
+this public key in your keyring before.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP35.HTM" TARGET="CNTFRAME">originator</A></TD>
+<TD CLASS="TableLightDesc">
+Originator email address - recommended when <see cref="command">command</see> is Sign or SignAndEncrypt
+
+<p/>GnuPG uses this parameter to find the associated secret key. You must have imported 
+this secret key in your keyring before. Otherwise, GnuPG uses the first secret key 
+in your keyring to sign messages. This property is mapped to the "--default-key" option.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP37.HTM" TARGET="CNTFRAME">yes</A></TD>
+<TD CLASS="TableLightDesc">
+Boolean flag; if true, GnuPG assumes "yes" on most questions.
+
+<p/>Defaults to true.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP39.HTM" TARGET="CNTFRAME">batch</A></TD>
+<TD CLASS="TableLightDesc">
+Boolean flag; if true, GnuPG uses batch mode (Never ask, do not allow 
+interactive commands).
+
+<p/>Defaults to true.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP41.HTM" TARGET="CNTFRAME">passphrase</A></TD>
+<TD CLASS="TableLightDesc">
+Passphrase for using your private key - mandatory when 
+<see cref="command">command</see> is Sign or SignAndEncrypt.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP43.HTM" TARGET="CNTFRAME">homedirectory</A></TD>
+<TD CLASS="TableLightDesc">
+name of the home directory (where keyrings AND gpg.exe are located)
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP45.HTM" TARGET="CNTFRAME">passphrasefd</A></TD>
+<TD CLASS="TableLightDesc">
+File descriptor for entering passphrase - defaults to 0 (standard input).
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP47.HTM" TARGET="CNTFRAME">exitcode</A></TD>
+<TD CLASS="TableLightDesc">
+Exit code from GnuPG process (0 = success; otherwise an error occured)
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP49.HTM" TARGET="CNTFRAME">verbose</A></TD>
+<TD CLASS="TableLightDesc">
+Verbose level (NoVerbose, Verbose, VeryVerbose). 
+
+<p/>Defaults to NoVerbose.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP52.HTM" TARGET="CNTFRAME">ProcessTimeOutMilliseconds</A></TD>
+<TD CLASS="TableLightDesc">
+Timeout for GnuPG process, in milliseconds.
+
+<p/>If the process doesn't exit before the end of the timeout period, the process is terminated (killed).
+
+<p/>Defaults to 10000 (10 seconds).
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP54.HTM" TARGET="CNTFRAME">BuildOptions</A></TD>
+<TD CLASS="TableLightDesc">
+Generate a string of GnuPG command line arguments, based on the properties
+set in this object (e.g. if the <see cref="armor">armor</see> property is true, 
+this method generates the "--armor" argument).
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP55.HTM" TARGET="CNTFRAME">ExecuteCommand</A></TD>
+<TD CLASS="TableLightDesc">
+Execute the GnuPG command defined by all parameters/options/properties.
+
+<p/>Raise a GnuPGException whenever an error occurs.
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP56.HTM" TARGET="CNTFRAME">StandardOutputReader</A></TD>
+<TD CLASS="TableLightDesc">
+Reader thread for standard output
+
+<p/>Updates the private variable _outputString (locks it first)
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP57.HTM" TARGET="CNTFRAME">StandardErrorReader</A></TD>
+<TD CLASS="TableLightDesc">
+Reader thread for standard error
+
+<p/>Updates the private variable _errorString (locks it first)
+<P>
+</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP58.HTM" TARGET="CNTFRAME">_command</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP59.HTM" TARGET="CNTFRAME">_armor</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP60.HTM" TARGET="CNTFRAME">_yes</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP61.HTM" TARGET="CNTFRAME">_recipient</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP62.HTM" TARGET="CNTFRAME">_homedirectory</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP63.HTM" TARGET="CNTFRAME">_bindirectory</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP64.HTM" TARGET="CNTFRAME">_passphrase</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP65.HTM" TARGET="CNTFRAME">_passphrasefd</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP66.HTM" TARGET="CNTFRAME">_verbose</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP67.HTM" TARGET="CNTFRAME">_batch</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP68.HTM" TARGET="CNTFRAME">_originator</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP69.HTM" TARGET="CNTFRAME">_ProcessTimeOutMilliseconds</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP70.HTM" TARGET="CNTFRAME">_exitcode</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP71.HTM" TARGET="CNTFRAME">_processObject</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP72.HTM" TARGET="CNTFRAME">_outputString</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR><TR height=20>
+<TD width=20>&nbsp;</TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD CLASS="TableLightDesc"><A HREF="CWP73.HTM" TARGET="CNTFRAME">_errorString</A></TD>
+<TD CLASS="TableLightDesc">&nbsp;</TD>
+<TD width=20>&nbsp;</TD>
+</TR></TABLE>
+</BODY>
+</HTML>

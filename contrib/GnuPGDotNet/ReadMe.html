@@ -1,0 +1,251 @@
+<html>
+
+<head>
+<title>Using Gnu Privacy Guard (GnuPG/PGP) within ASP.NET [v1.0]</title>
+</head>
+
+<body>
+<center><h3><font color="#a0a099">
+				Using Gnu Privacy Guard (GnuPG/PGP) within ASP.NET [v1.0]
+			</font></h3></center>
+<hr>
+
+<p><u>Author:</u> <a href="mailto:emmanuel@kartmann.org">Emmanuel KARTMANN</a></p>
+<p><u>Date:</u> November 1st, 2002</p>
+
+<hr>
+<p><img src="GnuPGDotNet.jpg" width="784" height="698"></p>
+
+
+<p><u>Environment:</u> .NET, ASP.NET, C#</p>
+<p><u>Keywords:</u> GnuPG, PGP, Cryptography, Thread, Process, Command Line Program</p>
+
+		<h2>GnuPG Wrapper</h2>
+
+<p>This article presents GnuPGWrapper v1.0, a wrapper class for <b>GnuPG</b>. </p>
+
+<p><b>GnuPG</b> stands for <em>GNU Privacy Guard</em> and is GNU's tool for secure
+		communication
+		and data storage. It can be used to <em>encrypt data</em> and to <em>create digital
+			signatures</em>. It includes an advanced key management facility and is
+		compliant
+		with the proposed <b>OpenPGP</b> Internet standard as described in <a href="http://www.gnupg.org/rfc2440.html" target=_blank>
+			RFC 2440</a>. As such,
+		GnuPG is a complete and free replacement for PGP (Pretty Good Privacy). </p>
+<p>This article provides a C# wrapper class (<code>GnuPGWrapper</code>) that
+		will enable use of <b>OpenPGP</b> Internet encryption standard within a .NET
+		world.&nbsp;It is shipped with a demo ASP.NET Web Form (GnuPG.aspx) which calls
+		the wrapper class. </p>
+
+<h2>Installation</h2>
+
+Prerequisites:
+<ul>
+<li>Complete ASP .NET Environment, e.g. Windows XP Professional + IIS 5.0 + .NET Framework SDK</li>
+<li>GnuPG for Windows (<a href="#AboutGnuPG">more about GnuPG</a>)</li>
+</ul>
+
+Procedure:
+<ul>
+<li>Download the zip file (<a href="GnuPGDotNet_src.zip">GnuPGDotNet_src.zip</a>)</li>
+<li>Extract the zip file (e.g. in directory "C:\Inetpub\wwwroot\")</li>
+<li>Using Administrative Tools / Internet Information Services, create an IIS Application for directory GnuPGDotNet</li>
+<li>Call demo Web Form via URL <a href="http://localhost/GnuPGDotNet/GnuPG.aspx" target=_blank>http://localhost/GnuPGDotNet/GnuPG.aspx</a></li>
+</ul>
+
+<h2>Implementation</h2>
+
+<p>GnuPG ships as a command line program (<code>gpg.exe</code>) acting as a filter
+		(reads from standard input
+		and writes into standard output). Although suitable for scripting on UNIX
+		systems (where calling a command line program
+		from "sh" or "bash" is easy), it's pretty hard to integrate this in a
+		production .NET environment.</p>
+
+<p>The GnuPG Wrapper executes the command line program (<code>gpg.exe</code>) in a
+		different process, redirects standard input (<code>stdin</code>), standard
+		output (<code>stdout</code>) and standard error (<code>stderr</code>) streams,
+		and monitors the streams to fetch the results of the encryption/signing
+		operation. </p>
+
+<p>
+		The GnuPG Wrapper:
+		<ul>
+			<li><b>Doesn't use any temporary files</b> to store results; it directly uses
+			streams/pipes.
+
+			<li>Uses <b>multiple threads</b> to
+			read data from standard input and standard error, preventing any deadlocks.
+
+			<li>Uses <b>configurable timeouts</b>
+			to prevent blocking calling applications in case of a system/program/process
+			crash
+
+			<li>Uses a <b>configurable passphrase</b>, which can be stored in a local
+				configuration file (Web.Config) to prevent disclosure of the phrase</li>
+		</ul>
+<p></p>
+
+<p>Please note that you must have <b>INSTALLED GnuPG</b> AND <b>generated/imported</b> the
+		appropriate keys before using this class. Refer to the GnuPG manual to do
+		this...</p>
+
+<h2>Sample Code</h2>
+
+In order to use the wrapper class, you need to proceed as follows:
+<ol>
+		<li>Create an instance of the class
+
+		<li>Set the "command" property to the requested command
+		(SignAndEncrypt, Encrypt, Decrypt, Sign, Verify)
+
+		<li>Optionally, set parameters for the command (home
+		directory, originator, recipients, etc...)
+
+		<li>Call the "ExecuteCommand" method with input/output strings variables</li>
+	</ol>
+
+<p>The next sections show sample source code for the most command operation
+		(SignAndEncrypt, Decrypt, Verify).</p>
+
+<ul>
+
+		<h3>Encrypt and Sign</h3>
+<pre lang=cs>
+	// Reference My GnuPG wrapping class
+	using Emmanuel.Cryptography.GnuPG;
+
+	// Create GnuPG wrapping class
+	GnuPGWrapper gpg = new GnuPGWrapper();
+
+	// Set command
+	gpg.command = Commands.SignAndEncrypt;
+
+	// Set some parameters from on Web.Config file
+	gpg.homedirectory = Server.MapPath(ConfigurationSettings.AppSettings["homedirectory"]);
+	gpg.passphrase = ConfigurationSettings.AppSettings["passphrase"];
+
+	// Set other parameters from Web Controls
+	gpg.originator = FromTextBox.Text;
+	gpg.recipient = ToTextBox.Text;
+
+	// Declare input/output variables (input is also read from a Web control)
+	string inputText = MessageTextBox.Text;
+	string outputText = "";
+
+	// Execute GnuPG
+	gpg.ExecuteCommand(inputText, out outputText);
+
+	// Display output text
+	OutputTextBox.Text = outputText;
+	OutputTextBox.Visible = true;
+	ErrorMessage.Visible = false;
+	ExitCodeLabel.Text = gpg.exitcode.ToString();
+</pre>
+
+
+		<h3>Decrypt</h3>
+		<pre lang=cs>
+	using Emmanuel.Cryptography.GnuPG;
+
+	GnuPGWrapper gpg = new GnuPGWrapper();
+
+	gpg.homedirectory = "C:\Inetpub\wwwroot\GnuPGDotNet\GnuPG"
+	gpg.passphrase = "My passphrase is so cool I can't remember it"
+	gpg.command = Commands.Decrypt;
+
+	// Execute GnuPG
+	string outputText = "";
+	gpg.ExecuteCommand("This is a test message.", out outputText);
+
+	// Display output text
+	[...]
+
+</pre>
+
+		<h3>Verify</h3>
+		<pre lang=cs>
+	using Emmanuel.Cryptography.GnuPG;
+	GnuPGWrapper gpg = new GnuPGWrapper();
+
+	gpg.homedirectory = "C:\Inetpub\wwwroot\GnuPGDotNet\GnuPG"
+	gpg.passphrase = "My passphrase is so cool I can't remember it"
+	gpg.originator = "me@mycompany.com";
+	gpg.command = Commands.Verify;
+
+	// Execute GnuPG
+	string outputText = "";
+	gpg.ExecuteCommand("This is a test message.", out outputText);
+
+	// Display output text
+	[...]
+
+</pre>
+
+	</ul>
+
+<h2>Error Handling</h2>
+
+<p>Error handling is done via a specific Exception class; method "ExecuteCommand"
+		raises this exception whenever an
+		error occurs. You calling application can handle this exception as follows:</p>
+
+<pre lang=cs>
+	using Emmanuel.Cryptography.GnuPG;
+	try 
+	{
+
+		GnuPGWrapper gpg = new GnuPGWrapper();
+
+		gpg.homedirectory = "C:\Inetpub\wwwroot\GnuPGDotNet\GnuPG"
+		gpg.passphrase = "My passphrase is so cool I can't remember it"
+		gpg.originator = "me@mycompany.com";
+		gpg.recipient = "you@yourcompany.com";
+		gpg.command = Commands.SignAndEncrypt;
+
+		// Execute GnuPG
+		string outputText = "";
+		gpg.ExecuteCommand("This is a test message.", out outputText);
+
+		// Display output text
+		[...]
+
+	}
+	catch (GnuPGException gpge)
+	{
+		// Display error message
+		ErrorMessage.Text = gpge.Message; // Contains a clear text error message, either from the wrapper or from gpg.exe itself
+	}
+</pre>
+
+<h2>Real-Life Deployment</h2>
+
+<p>This code is deployed in a real-life e-commerce web site that uses GnuPG to communicate with some of its partners securely 
+(<a href="http://www.gourmeo.com" target="_blank">http://www.gourmeo.com</a>).</p>
+
+<a name="AboutGnuPG">
+<h2>About GnuPG and PGP</h2>
+</a>
+
+<p>This class has been developed and tested with GnuPG v1.2.0 (MingW32). </p>
+<p>You can check the <a href="gpg.txt" target=_blank>command line manual page
+			for gpg.exe</a></p>
+<p>For more about GNU, please refer to <a href="http://www.gnu.org" target=_blank>http://www.gnu.org</a><br>
+		For more about GnuPG, please refer to <a href="http://www.gnupg.org" target=_blank>http://www.gnupg.org</a><br>
+		For more
+		about OpenPGP (RFC 2440), please refer to <a href="http://www.gnupg.org/rfc2440.html" target=_blank>
+			http://www.gnupg.org/rfc2440.html</a><br>
+		For more about PGP, please refer to <a href="http://www.pgpi.org" target=_blank>http://www.pgpi.org</a><br>
+			</p>
+
+<h3>Downloads</h3>
+
+<a href="GnuPGDotNet_src.zip">
+		Download source and demo - 535 Kb</a>
+
+<h3>History</h3>
+Date Posted:  November 1st, 2002<br>
+
+</body>
+
+</html>
