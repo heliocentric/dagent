@@ -11,15 +11,17 @@ namespace dagent_net_lib.keymanager
 {
     public class Manager
     {
+        public messagebroker.MessageBroker broker;
         public String secretkeyring;
         public String publickeyring;
-        public Manager(String UUID)
+        public Manager(messagebroker.MessageBroker Broker)
         {
             Util.log(this.ToString(), 99, "Run Path: " + Util.getApplicationPath());
-            this.Constructor(UUID);
+            this.Constructor(Broker);
         }
-        public void Constructor(String UUID)
+        public void Constructor(messagebroker.MessageBroker Broker)
         {
+            this.broker = Broker;
             this.FindGnuPG("");
             this.gpg = new GnuPGWrapper(this.gpgpath);
             this.gpghomepath = Util.getApplicationPath() + Path.DirectorySeparatorChar + "gnupg";
@@ -27,6 +29,20 @@ namespace dagent_net_lib.keymanager
             if (!Directory.Exists(this.gpghomepath)) {
                 Directory.CreateDirectory(this.gpghomepath.Replace("file:\\", ""));
             }
+            // Find key id for UUID@Hostname
+            this.gpg.command = Commands.FindKey;
+            this.gpg.arguments = this.broker.UUID + "@" + this.broker.Hostname;
+            // If keyid == null
+            //   then
+            //     fetch keyid from pgp.mit.edu
+            //     if keyid == null
+            //       then
+            //         generate host key
+            // Save keyid for later
+            // Download any new information for keyid from pgp.mit.edu
+            // Send keyid to pgp.mit.edu (if anything needs to be sent)
+            // Use keyid to sign messages from now on.
+            // 
         }
         private String gpgpath;
         private String gpghomepath;

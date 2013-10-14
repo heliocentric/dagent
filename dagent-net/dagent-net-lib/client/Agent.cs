@@ -75,7 +75,7 @@ namespace dagent_net_lib
         }
         public void Run()
         {
-            this.KeyManager = new keymanager.Manager(this.Broker.UUID);
+            this.KeyManager = new keymanager.Manager(this.Broker);
             this.HostInfo_Channel = this.Broker.NewChannel();
             this.HostInfo = new Thread(new ThreadStart(this.HostInfo_Run));
             this.HostInfo.Start();

@@ -168,8 +168,17 @@ namespace Emmanuel.Cryptography.GnuPG
 			{
 				_recipient = value;
 			}
-		} 
-
+		}
+        /// <summary>
+        /// Command line arguments that may need to be set.
+        /// </summary>
+        public string arguments
+        {
+            set
+            {
+                _arguments = value;
+            }
+        }
 		/// <summary>
 		/// Originator email address - recommended when <see cref="command">command</see> is Sign or SignAndEncrypt
 		/// 
@@ -365,7 +374,7 @@ namespace Emmanuel.Cryptography.GnuPG
                     optionsBuilder.Append("--gen-key ");
                     break;
                 case Commands.FindKey:
-                    optionsBuilder.Append("");
+                    optionsBuilder.Append("--list-keys ");
                     break;
 			}
 
@@ -437,6 +446,10 @@ namespace Emmanuel.Cryptography.GnuPG
 					break;
 			}
 
+            if (!this._arguments.Equals(""))
+            {
+                optionsBuilder.Append(this._arguments + " ");
+            }
 			return(optionsBuilder.ToString());
 		}
 
@@ -450,7 +463,6 @@ namespace Emmanuel.Cryptography.GnuPG
 		public void ExecuteCommand(string inputText, out string outputText)
 		{
 			outputText = "";
-
 			string gpgOptions = BuildOptions();
 			string gpgExecutable = _bindirectory + "\\gpg.exe";
 
@@ -578,7 +590,7 @@ namespace Emmanuel.Cryptography.GnuPG
 		private string _originator = "";
 		private int _ProcessTimeOutMilliseconds = 10000; // 10 seconds
 		private int _exitcode = 0;
-
+        private string _arguments = "";
 		// Variables used for monitoring external process and threads
 		private Process _processObject;
 		private string _outputString;
