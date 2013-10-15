@@ -168,7 +168,17 @@ namespace Emmanuel.Cryptography.GnuPG
 			{
 				_recipient = value;
 			}
-		}
+        } 
+        /// <summary>
+        /// Command line arguments that may need to be set.
+        /// </summary>
+        public string keyserver
+        {
+            set
+            {
+                _keyserver = value;
+            }
+        }
         /// <summary>
         /// Command line arguments that may need to be set.
         /// </summary>
@@ -362,7 +372,11 @@ namespace Emmanuel.Cryptography.GnuPG
 			if (_batch)
 			{
 				optionsBuilder.Append("--batch ");
-			}
+            }
+            if (!_keyserver.Equals(""))
+            {
+                optionsBuilder.Append("--keyserver " + this._keyserver + " ");
+            }
 
 			// Command
 			switch (_command)
@@ -602,6 +616,7 @@ namespace Emmanuel.Cryptography.GnuPG
 		private string _bindirectory = "";
 		private string _passphrase = "";
 		private string _passphrasefd = "";
+        private string _keyserver = "";
 		private VerboseLevel _verbose = VerboseLevel.NoVerbose;
 		private bool _batch = true;
 		private string _originator = "";

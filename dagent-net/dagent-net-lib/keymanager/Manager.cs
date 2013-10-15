@@ -27,6 +27,7 @@ namespace dagent_net_lib.keymanager
             this.gpghomepath = Util.getApplicationPath() + Path.DirectorySeparatorChar + "gnupg";
             this.gpg.homedirectory = this.gpghomepath.Replace("file:\\","");
             this.gpg.bindirectory = this.gpgpath.Replace("file:\\","");
+            this.gpg.keyserver = "pgp.mit.edu";
             if (!Directory.Exists(this.gpghomepath)) {
                 Directory.CreateDirectory(this.gpghomepath.Replace("file:\\", ""));
             }
