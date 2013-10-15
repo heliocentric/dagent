@@ -52,7 +52,23 @@ namespace Emmanuel.Cryptography.GnuPG
 		/// <summary>
 		/// Assume that input is a signature and verify it without generating any output
 		/// </summary>
-		Verify
+		Verify,
+		/// <summary>
+		/// Generate a KeyPair
+		/// </summary>
+        KeyGen,
+        /// <summary>
+        /// Find a key.
+        /// </summary>
+        FindKey,
+        /// <summary>
+        /// Import a public key
+        /// </summary>
+        Import,
+		/// <summary>
+		/// Export a public key
+		/// </summary>
+		Export
 	};
 	// TODO implement other GPG commands (--clearsign, --detach-sign, --symmetric, --store, --verify-files, --encrypt-files, --decrypt-files, --list-keys, --list-public-keys, --list-secret-keys, --list-sigs, --check-sigs, --fingerprint, --check-sigs, --list-packets, --gen-key, --edit-key, --sign-key, --lsign-key, --nrsign-key, --delete-key, --delete-secret-key, --delete-secret-and-public-key, --gen-revoke, --desig-revoke, --export, --send-keys, --export-all, --export-secret-keys, --export-secret-subkeys, --import, --fast-import, --recv-keys, --search-keys, --update-trustdb, --check-trustdb, --export-ownertrust, --import-ownertrust, --rebuild-keydb-caches, --print-md, --print-mds, --gen-random, --gen-prime mode, --version, --warranty, --help)
 
@@ -152,8 +168,36 @@ namespace Emmanuel.Cryptography.GnuPG
 			{
 				_recipient = value;
 			}
-		} 
-
+		}
+        /// <summary>
+        /// Command line arguments that may need to be set.
+        /// </summary>
+        public string arguments
+        {
+            set
+            {
+                _arguments = value;
+            }
+        }
+        /// <summary>
+        /// Add a binary path, as we use a seperate binary path from our keyring.
+        /// </summary>
+        public string bindirectory
+        {
+            get
+            {
+                if (this._bindirectory == "")
+                {
+                    return this._homedirectory;
+                } else {
+                    return this._bindirectory;
+                }
+            }
+            set
+            {
+				_bindirectory = value;
+            }
+        }
 		/// <summary>
 		/// Originator email address - recommended when <see cref="command">command</see> is Sign or SignAndEncrypt
 		/// 
@@ -225,8 +269,6 @@ namespace Emmanuel.Cryptography.GnuPG
 			set
 			{
 				_homedirectory = value;
-				// For now, let's assume the gpg.exe program is installed in the homedirectory too
-				_bindirectory = value;
 			}
 		}
 
@@ -345,6 +387,12 @@ namespace Emmanuel.Cryptography.GnuPG
 				case Commands.Verify:
 					optionsBuilder.Append("--verify ");
 					break;
+                case Commands.KeyGen:
+                    optionsBuilder.Append("--gen-key ");
+                    break;
+                case Commands.FindKey:
+                    optionsBuilder.Append("--list-keys ");
+                    break;
 			}
 
 			// ASCII output?
@@ -415,6 +463,10 @@ namespace Emmanuel.Cryptography.GnuPG
 					break;
 			}
 
+            if (!this._arguments.Equals(""))
+            {
+                optionsBuilder.Append(this._arguments + " ");
+            }
 			return(optionsBuilder.ToString());
 		}
 
@@ -428,9 +480,8 @@ namespace Emmanuel.Cryptography.GnuPG
 		public void ExecuteCommand(string inputText, out string outputText)
 		{
 			outputText = "";
-
 			string gpgOptions = BuildOptions();
-			string gpgExecutable = _bindirectory + "\\gpg.exe";
+			string gpgExecutable = _bindirectory + "\\gpg2.exe";
 
 			// TODO check existence of _bindirectory and gpgExecutable
 
@@ -510,7 +561,7 @@ namespace Emmanuel.Cryptography.GnuPG
 				{
 					_errorString = "GPGNET: [" + _processObject.ExitCode.ToString() + "]: Unknown error";
 				}
-				throw new GnuPGException(_errorString);
+				 throw new GnuPGException(_errorString);
 			}
 		}
 
@@ -556,7 +607,7 @@ namespace Emmanuel.Cryptography.GnuPG
 		private string _originator = "";
 		private int _ProcessTimeOutMilliseconds = 10000; // 10 seconds
 		private int _exitcode = 0;
-
+        private string _arguments = "";
 		// Variables used for monitoring external process and threads
 		private Process _processObject;
 		private string _outputString;
