@@ -23,21 +23,28 @@ namespace dagent_net_lib.keymanager
         {
             this.broker = Broker;
             this.FindGnuPG("");
-            this.gpg = new GnuPGWrapper(this.gpgpath);
+            this.gpg = new GnuPGWrapper();
             this.gpghomepath = Util.getApplicationPath() + Path.DirectorySeparatorChar + "gnupg";
-            this.gpg.homedirectory = this.gpghomepath;
+            this.gpg.homedirectory = this.gpghomepath.Replace("file:\\","");
+            this.gpg.bindirectory = this.gpgpath.Replace("file:\\","");
             if (!Directory.Exists(this.gpghomepath)) {
                 Directory.CreateDirectory(this.gpghomepath.Replace("file:\\", ""));
             }
             // Find key id for UUID@Hostname
             this.gpg.command = Commands.FindKey;
             this.gpg.arguments = this.broker.UUID + "@" + this.broker.Hostname;
-            // If keyid == null
-            //   then
-            //     fetch keyid from pgp.mit.edu
-            //     if keyid == null
-            //       then
-            //         generate host key
+            string outputtext = "";
+            string keyid = "";
+            try
+            {
+                this.gpg.ExecuteCommand("", out outputtext);
+                Util.log(this.ToString(), 99, outputtext);
+            }
+            // If keyid does not exist
+            catch(GnuPGException ex)
+            {
+                // generate host key
+            }
             // Save keyid for later
             // Download any new information for keyid from pgp.mit.edu
             // Send keyid to pgp.mit.edu (if anything needs to be sent)

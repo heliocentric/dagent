@@ -179,6 +179,25 @@ namespace Emmanuel.Cryptography.GnuPG
                 _arguments = value;
             }
         }
+        /// <summary>
+        /// Add a binary path, as we use a seperate binary path from our keyring.
+        /// </summary>
+        public string bindirectory
+        {
+            get
+            {
+                if (this._bindirectory == "")
+                {
+                    return this._homedirectory;
+                } else {
+                    return this._bindirectory;
+                }
+            }
+            set
+            {
+				_bindirectory = value;
+            }
+        }
 		/// <summary>
 		/// Originator email address - recommended when <see cref="command">command</see> is Sign or SignAndEncrypt
 		/// 
@@ -250,8 +269,6 @@ namespace Emmanuel.Cryptography.GnuPG
 			set
 			{
 				_homedirectory = value;
-				// For now, let's assume the gpg.exe program is installed in the homedirectory too
-				_bindirectory = value;
 			}
 		}
 
@@ -464,7 +481,7 @@ namespace Emmanuel.Cryptography.GnuPG
 		{
 			outputText = "";
 			string gpgOptions = BuildOptions();
-			string gpgExecutable = _bindirectory + "\\gpg.exe";
+			string gpgExecutable = _bindirectory + "\\gpg2.exe";
 
 			// TODO check existence of _bindirectory and gpgExecutable
 
@@ -544,7 +561,7 @@ namespace Emmanuel.Cryptography.GnuPG
 				{
 					_errorString = "GPGNET: [" + _processObject.ExitCode.ToString() + "]: Unknown error";
 				}
-				throw new GnuPGException(_errorString);
+				 throw new GnuPGException(_errorString);
 			}
 		}
 
